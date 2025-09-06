@@ -1,0 +1,29 @@
+// Enhanced form handling with animations
+document.getElementById("loginForm").addEventListener("submit", function (e) {
+  e.preventDefault();
+
+  const button = this.querySelector(".login-btn");
+  const username = document.getElementById("username").value;
+  const password = document.getElementById("password").value;
+
+  if (username && password) {
+    button.classList.add("loading");
+    button.innerHTML =
+      '<span class="spinner-border spinner-border-sm me-2" role="status"></span>Signing In...';
+
+    // Simulate login process (replace with actual login logic)
+    setTimeout(() => {
+      button.classList.remove("loading");
+      button.innerHTML = '<i class="fas fa-check me-2"></i>Success!';
+      button.style.background =
+        "linear-gradient(135deg, #28a745 0%, #1e7e34 100%)";
+
+      // Reset button after 2 seconds
+      setTimeout(() => {
+        button.innerHTML = '<i class="fas fa-sign-in-alt me-2"></i>Login';
+        button.style.background = "";
+      }, 2000);
+    }, 1500);
+  }
+});
+
