@@ -14,26 +14,39 @@ document.getElementById("loginForm").addEventListener("submit", function (e) {
     // Simulate login process (replace with actual login logic)
     setTimeout(() => {
       button.classList.remove("loading");
-      
-
-      
-        if (username === "admin" && password === "admin") {
-          button.innerHTML = '<i class="fas fa-check me-2"></i>Success!';
-      button.style.background =
-        "linear-gradient(135deg, #28a745 0%, #1e7e34 100%)";
+      if (username === "admin" && password === "admin") {
+        button.innerHTML = '<i class="fas fa-check me-2"></i>Success!';
+        button.style.background =
+          "linear-gradient(135deg, #28a745 0%, #1e7e34 100%)";
+        setTimeout(() => {
           window.location.href = "./admin/dashboard.html";
-        } else {
-          button.innerHTML = '<i class="fa-solid fa-xmark me-2"></i>Login Failed!';
-      button.style.background =
-        "linear-gradient(135deg, red 0%, red 100%)";
-          alert("Invalid username or password!");
+        }, 1000);
+      } else if (username === "user" && password === "user") {
+        button.innerHTML = '<i class="fas fa-check me-2"></i>Success!';
+        button.style.background =
+          "linear-gradient(135deg, #28a745 0%, #1e7e34 100%)";
           setTimeout(() => {
-            button.innerHTML = '<i class="fas fa-sign-in-alt me-2"></i>Login';
-            button.style.background =
-              "linear-gradient(135deg, var(--bfp-red) 0%, var(--bfp-dark-red) 100%)";
-          }, 2000)
-        }
+            window.location.href = "./admin/dashboard.html";
+          }, 1000)
+        
+      } else if (username === "inspector" && password === "inspector") {
+        button.innerHTML = '<i class="fas fa-check me-2"></i>Success!';
+        button.style.background =
+          "linear-gradient(135deg, #28a745 0%, #1e7e34 100%)";
+          setTimeout(() => {
+            window.location.href = "./admin/dashboard.html";
+          }, 1000)
+      } else {
+        button.innerHTML =
+          '<i class="fa-solid fa-xmark me-2"></i>Login Failed!';
+        button.style.background = "linear-gradient(135deg, red 0%, red 100%)";
+        alert("Invalid username or password!");
+        setTimeout(() => {
+          button.innerHTML = '<i class="fas fa-sign-in-alt me-2"></i>Login';
+          button.style.background =
+            "linear-gradient(135deg, var(--bfp-red) 0%, var(--bfp-dark-red) 100%)";
+        }, 2000);
+      }
     }, 1500);
   }
 });
-
