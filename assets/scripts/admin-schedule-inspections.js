@@ -1,27 +1,28 @@
 // Sample data
 let inspectors = [
-  {
-    id: "juan-cruz",
-    name: "Juan Dela Cruz",
-    initials: "JC",
-    status: "2 inspections scheduled today",
-    available: true,
-  },
-  {
-    id: "maria-santos",
-    name: "Maria Santos",
-    initials: "MS",
-    status: "1 inspection scheduled today",
-    available: true,
-  },
-  {
-    id: "roberto-pasquino",
-    name: "Roberto Pasquino",
-    initials: "RP",
-    status: "Available all day",
-    available: true,
-  },
+  // {
+  //   id: "juan-cruz",
+  //   name: "Juan Dela Cruz",
+  //   initials: "JC",
+  //   status: "2 inspections scheduled today",
+  //   available: true,
+  // },
+  // {
+  //   id: "maria-santos",
+  //   name: "Maria Santos",
+  //   initials: "MS",
+  //   status: "1 inspection scheduled today",
+  //   available: true,
+  // },
+  // {
+  //   id: "roberto-pasquino",
+  //   name: "Roberto Pasquino",
+  //   initials: "RP",
+  //   status: "Available all day",
+  //   available: true,
+  // },
 ];
+
 
 let upcomingInspections = [
   {
@@ -134,24 +135,28 @@ function initializeMap() {
   });
 }
 
-function renderInspectors(list) {
+async function renderInspectors(list) {
+  const res = await fetch("../../utility/getInspector.php")
+  const json = await res.json()
+  console.log(json)
+  inspectors = json
   const inspectorList = document.getElementById("inspectorList");
   inspectorList.innerHTML = "";
 
-  if (list.length === 0) {
+  if (inspectors.length === 0) {
     inspectorList.innerHTML = "<p>No inspectors found.</p>";
     return;
   }
 
-  list.forEach((inspector) => {
+  inspectors.forEach((inspector) => {
     const inspectorCard = document.createElement("div");
     inspectorCard.className = "inspector-card";
     inspectorCard.dataset.inspectorId = inspector.id;
 
     inspectorCard.innerHTML = `
-      <div class="inspector-avatar">${inspector.initials}</div>
+      <div class="inspector-avatar">${inspector.fullname[0]}</div>
       <div class="inspector-info">
-        <h6>${inspector.name}</h6>
+        <h6>${inspector.fullname}</h6>
         <small>${inspector.status}</small>
       </div>
     `;
@@ -160,6 +165,7 @@ function renderInspectors(list) {
     inspectorList.appendChild(inspectorCard);
   });
 }
+
 
 function selectInspector(inspector) {
   // Remove previous selection
@@ -181,9 +187,9 @@ function selectInspector(inspector) {
   assignedDisplay.style.display = "block";
   assignedInfo.innerHTML = `
                 <div class="d-flex align-items-center gap-2">
-                    <div class="inspector-avatar" style="width: 30px; height: 30px; font-size: 0.8em;">${inspector.initials}</div>
+                    <div class="inspector-avatar" style="width: 30px; height: 30px; font-size: 0.8em;">${inspector.fullname[0]}</div>
                     <div>
-                        <strong>${inspector.name}</strong>
+                        <strong>${inspector.fullname}</strong>
                         <div class="text-muted small">${inspector.status}</div>
                     </div>
                 </div>
@@ -307,7 +313,7 @@ function scheduleInspection() {
   renderInspectorSchedule();
   resetForm();
 
-  showAlert("Inspection scheduled successfully!", "success");
+  showAlert("Inspection scheduled successfully!", "success"); 
 }
 
 function resetForm() {

@@ -39,19 +39,19 @@
 
       <nav class="sidebar-nav">
         <div class="nav-item">
-          <a href="./dashboard.html" class="nav-link">
+          <a href="./dashboard.php" class="nav-link">
             <i class="fas fa-tachometer-alt"></i>
             Dashboard
           </a>
         </div>
         <div class="nav-item">
-          <a href="./establishments.html" class="nav-link">
+          <a href="./establishments.php" class="nav-link">
             <i class="fas fa-building"></i>
             Establishments
           </a>
         </div>
         <div class="nav-item">
-          <a href="./schedule-inspections.html" class="nav-link">
+          <a href="#" class="nav-link active">
             <i class="fas fa-calendar-check"></i>
             Schedule Inspections
           </a>
@@ -63,13 +63,13 @@
           </a>
         </div>
         <div class="nav-item">
-          <a href="#" class="nav-link active">
+          <a href="./reports.php" class="nav-link">
             <i class="fas fa-file-alt"></i>
             Reports
           </a>
         </div>
         <div class="nav-item">
-          <a href="./user-management.html" class="nav-link">
+          <a href="./user-management.php" class="nav-link">
             <i class="fas fa-users"></i>
             User Management
           </a>
@@ -77,7 +77,7 @@
       </nav>
 
       <div class="nav-item">
-        <a href="../index.html" class="nav-link">
+        <a href="../index.php" class="nav-link">
           <i class="fas fa-sign-out-alt"></i>
           Logout
         </a>

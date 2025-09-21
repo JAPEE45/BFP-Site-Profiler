@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -23,7 +24,7 @@
   </head>
   <body>
     <!-- Sidebar -->
-    <div class="sidebar" id="sidebar">
+  <div class="sidebar" id="sidebar">
       <div class="logo-section">
         <div class="logo">
           <i
@@ -36,19 +37,19 @@
 
       <nav class="sidebar-nav">
         <div class="nav-item">
-          <a href="./dashboard.html" class="nav-link">
+          <a href="./dashboard.php" class="nav-link">
             <i class="fas fa-tachometer-alt"></i>
             Dashboard
           </a>
         </div>
         <div class="nav-item">
-          <a href="./establishments.html" class="nav-link">
+          <a href="./establishments.php" class="nav-link">
             <i class="fas fa-building"></i>
             Establishments
           </a>
         </div>
         <div class="nav-item">
-          <a href="./schedule-inspections.html" class="nav-link">
+          <a href="./schedule-inspections.php" class="nav-link active">
             <i class="fas fa-calendar-check"></i>
             Schedule Inspections
           </a>
@@ -60,13 +61,13 @@
           </a>
         </div>
         <div class="nav-item">
-          <a href="./reports.html" class="nav-link ">
+          <a href="./reports.php" class="nav-link">
             <i class="fas fa-file-alt"></i>
             Reports
           </a>
         </div>
         <div class="nav-item">
-          <a href="#" class="nav-link active">
+          <a href="./user-management.php" class="nav-link">
             <i class="fas fa-users"></i>
             User Management
           </a>
@@ -74,7 +75,7 @@
       </nav>
 
       <div class="nav-item">
-        <a href="../index.html" class="nav-link">
+        <a href="../index.php" class="nav-link">
           <i class="fas fa-sign-out-alt"></i>
           Logout
         </a>
@@ -137,7 +138,7 @@
                   <th>Email</th>
                   <th>Role</th>
                   <th>Status</th>
-                  <th>Last Active</th>
+                
                   <th>Actions</th>
                 </tr>
               </thead>
@@ -192,12 +193,22 @@
                 />
               </div>
               <div class="mb-3">
+                <label class="form-label">Address</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="address"
+                  required
+                />
+              </div>
+              <div class="mb-3">
                 <label class="form-label">Role *</label>
                 <select class="form-select" name="role" required>
                   <option value="">Select Role</option>
                   <option value="Administrator">Administrator</option>
                   <option value="Inspector">Inspector</option>
                   <option value="Establishment">Establishment</option>
+                  <option value="owner">owner</option>
                 </select>
               </div>
               <div class="mb-3">
@@ -284,12 +295,21 @@
                 />
               </div>
               <div class="mb-3">
+                <label class="form-label">Address </label>
+                <input
+                  type="text"
+                  class="form-control"
+                  name="address"
+                  required
+                />
+              </div>
+              <div class="mb-3">
                 <label class="form-label">Role *</label>
                 <select class="form-select" name="role" required>
                   <option value="">Select Role</option>
-                  <option value="Administrator">Administrator</option>
-                  <option value="Inspector">Inspector</option>
-                  <option value="Establishment">Establishment</option>
+                  <option value="admin">Administrator</option>
+                  <option value="inspector">Inspector</option>
+                  <!-- <option value="Establishment">Establishment</option> -->
                 </select>
               </div>
               <div class="mb-3">

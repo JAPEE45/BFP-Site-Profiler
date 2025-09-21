@@ -12,21 +12,31 @@ document.getElementById("loginForm").addEventListener("submit", function (e) {
       '<span class="spinner-border spinner-border-sm me-2" role="status"></span>Signing In...';
 
     // Simulate login process (replace with actual login logic)
-    setTimeout(() => {
+    setTimeout(async() => {
+      const res = await fetch("../utility/login.php",{
+        method:"POST",
+        headers:{'Content-Type': 'application/json'},
+        body:JSON.stringify({
+          "username":username,
+          "password":password
+        })
+      })
+      const j = await res.json()
+      console.log(j)
       button.classList.remove("loading");
-      if (username === "admin" && password === "admin") {
+      if (j.success && j.role == "admin") {
         button.innerHTML = '<i class="fas fa-check me-2"></i>Success!';
         button.style.background =
           "linear-gradient(135deg, #28a745 0%, #1e7e34 100%)";
         setTimeout(() => {
-          window.location.href = "./admin/dashboard.html";
+          window.location.href = "./admin/dashboard.php";
         }, 1000);
-      } else if (username === "user" && password === "user") {
+      } else if (j.success && j.role == "owner") {
         button.innerHTML = '<i class="fas fa-check me-2"></i>Success!';
         button.style.background =
           "linear-gradient(135deg, #28a745 0%, #1e7e34 100%)";
           setTimeout(() => {
-            window.location.href = "./admin/dashboard.html";
+            window.location.href = "./user/dashboard.html";
           }, 1000)
         
       } else if (username === "inspector" && password === "inspector") {
