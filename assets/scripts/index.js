@@ -24,7 +24,7 @@ document.getElementById("loginForm").addEventListener("submit", function (e) {
       const j = await res.json()
       console.log(j)
       button.classList.remove("loading");
-      if (j.success && j.role == "admin") {
+      if (j.success && j.role == "admin ") {
         button.innerHTML = '<i class="fas fa-check me-2"></i>Success!';
         button.style.background =
           "linear-gradient(135deg, #28a745 0%, #1e7e34 100%)";
@@ -36,15 +36,15 @@ document.getElementById("loginForm").addEventListener("submit", function (e) {
         button.style.background =
           "linear-gradient(135deg, #28a745 0%, #1e7e34 100%)";
           setTimeout(() => {
-            window.location.href = "./user/dashboard.html";
+            window.location.href = "./user/dashboard.php";
           }, 1000)
         
-      } else if (username === "inspector" && password === "inspector") {
+      } else if (j.success && j.role.toLowerCase() == "inspector") {
         button.innerHTML = '<i class="fas fa-check me-2"></i>Success!';
         button.style.background =
           "linear-gradient(135deg, #28a745 0%, #1e7e34 100%)";
           setTimeout(() => {
-            window.location.href = "./admin/dashboard.html";
+            window.location.href = "./inspector/dashboard.php";
           }, 1000)
       } else {
         button.innerHTML =

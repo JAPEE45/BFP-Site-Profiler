@@ -1,3 +1,6 @@
+<?php
+ include '../../utility/checkingUser.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -36,19 +39,19 @@
 
       <nav class="sidebar-nav">
         <div class="nav-item">
-          <a href="#" class="nav-link active">
+          <a href="./dashboard.php" class="nav-link">
             <i class="fas fa-tachometer-alt"></i>
             Dashboard
           </a>
         </div>
         <div class="nav-item">
-          <a href="./my-establishments.html" class="nav-link">
+          <a href="./my-establishments.php" class="nav-link">
             <i class="fas fa-building"></i>
             My Establishments
           </a>
         </div>
         <div class="nav-item">
-          <a href="./certificates.html" class="nav-link">
+          <a href="./certificates.php" class="nav-link active">
             <i class="fas fa-calendar-check"></i>
             Certificates
           </a>
@@ -62,12 +65,13 @@
       </nav>
 
       <div class="nav-item">
-        <a href="../index.html" class="nav-link">
+        <a href="../../utility/logout.php" class="nav-link">
           <i class="fas fa-sign-out-alt"></i>
           Logout
         </a>
       </div>
     </div>
+
 
     <!-- Main Content -->
     <div class="main-content" id="mainContent">
