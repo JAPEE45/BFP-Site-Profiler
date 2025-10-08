@@ -25,54 +25,54 @@ let inspectors = [
 
 
 let upcomingInspections = [
-  {
-    id: 1,
-    establishment: "Virac Public Market",
-    establishmentId: "est-002",
-    type: "Routine",
-    dateTime: "2023-06-15 09:00",
-    inspector: "Juan Dela Cruz",
-    inspectorId: "juan-cruz",
-    priority: "High",
-    status: "Pending",
-    notes: "Regular market inspection",
-  },
-  {
-    id: 2,
-    establishment: "Catanduanes State University",
-    establishmentId: "est-001",
-    type: "Follow-up",
-    dateTime: "2023-06-16 02:00",
-    inspector: "Maria Santos",
-    inspectorId: "maria-santos",
-    priority: "Medium",
-    status: "Approved",
-    notes: "Follow-up on previous findings",
-  },
-  {
-    id: 3,
-    establishment: "Virac Town Center",
-    establishmentId: "est-003",
-    type: "Initial",
-    dateTime: "2023-06-17 10:00",
-    inspector: "Roberto Pasquino",
-    inspectorId: "roberto-pasquino",
-    priority: "Medium",
-    status: "Approved",
-    notes: "Initial inspection for new business",
-  },
-  {
-    id: 4,
-    establishment: "BFP Catanduanes",
-    establishmentId: "est-004",
-    type: "Routine",
-    dateTime: "2023-06-18 08:30",
-    inspector: "Juan Dela Cruz",
-    inspectorId: "juan-cruz",
-    priority: "Low",
-    status: "Completed",
-    notes: "Internal facility inspection",
-  },
+  // {
+  //   id: 1,
+  //   establishment: "Virac Public Market",
+  //   establishmentId: "est-002",
+  //   type: "Routine",
+  //   dateTime: "2023-06-15 09:00",
+  //   inspector: "Juan Dela Cruz",
+  //   inspectorId: "juan-cruz",
+  //   priority: "High",
+  //   status: "Pending",
+  //   notes: "Regular market inspection",
+  // },
+  // {
+  //   id: 2,
+  //   establishment: "Catanduanes State University",
+  //   establishmentId: "est-001",
+  //   type: "Follow-up",
+  //   dateTime: "2023-06-16 02:00",
+  //   inspector: "Maria Santos",
+  //   inspectorId: "maria-santos",
+  //   priority: "Medium",
+  //   status: "Approved",
+  //   notes: "Follow-up on previous findings",
+  // },
+  // {
+  //   id: 3,
+  //   establishment: "Virac Town Center",
+  //   establishmentId: "est-003",
+  //   type: "Initial",
+  //   dateTime: "2023-06-17 10:00",
+  //   inspector: "Roberto Pasquino",
+  //   inspectorId: "roberto-pasquino",
+  //   priority: "Medium",
+  //   status: "Approved",
+  //   notes: "Initial inspection for new business",
+  // },
+  // {
+  //   id: 4,
+  //   establishment: "BFP Catanduanes",
+  //   establishmentId: "est-004",
+  //   type: "Routine",
+  //   dateTime: "2023-06-18 08:30",
+  //   inspector: "Juan Dela Cruz",
+  //   inspectorId: "juan-cruz",
+  //   priority: "Low",
+  //   status: "Completed",
+  //   notes: "Internal facility inspection",
+  // },
 ];
 
 let selectedInspector = null;
@@ -87,16 +87,18 @@ document.addEventListener("DOMContentLoaded", function () {
   setupEventListeners();
 });
 
-function initializeMap() {
+async function initializeMap() {
   // Initialize map centered on Virac, Catanduanes
-  map = L.map("inspectionMap").setView([13.5732, 124.235], 13);
+  const res = await fetch("../../utility/inspectionAssignment.php");
+  const j = await res.json();
+  map = L.map("inspectionMap").setView([j[0].lat, j[0].lng], 13);
 
   L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
     attribution: "© OpenStreetMap contributors",
   }).addTo(map);
 
   // Add sample establishment markers
-  const establishments = [
+  let establishments = [
     {
       name: "Catanduanes State University",
       lat: 13.582,
@@ -128,7 +130,8 @@ function initializeMap() {
       type: "Hospitality",
     },
   ];
-
+  
+  establishments = j
   establishments.forEach((est) => {
     const marker = L.marker([est.lat, est.lng]).addTo(map);
     marker.bindPopup(`<strong>${est.name}</strong><br>Type: ${est.type}`);
@@ -196,10 +199,13 @@ function selectInspector(inspector) {
             `;
 }
 
-function renderUpcomingInspections() {
+async function renderUpcomingInspections() {
   const tbody = document.getElementById("upcomingInspectionsBody");
   tbody.innerHTML = "";
-
+  const res = await fetch("../../utility/adminGetInspection.php")
+  const j = await res.json()
+  console.log(j)
+  upcomingInspections = j
   upcomingInspections.forEach((inspection) => {
     const row = createInspectionRow(inspection);
     tbody.appendChild(row);
@@ -211,9 +217,9 @@ function createInspectionRow(inspection) {
 
   const priorityClass =
     {
-      High: "priority-high",
-      Medium: "priority-medium",
-      Low: "priority-low",
+      high: "priority-high",
+      medium: "priority-medium",
+      low: "priority-low",
     }[inspection.priority] || "priority-medium";
 
   const statusClass =
@@ -278,7 +284,7 @@ function setupEventListeners() {
     .addEventListener("click", updateInspection);
 }
 
-function scheduleInspection() {
+async function scheduleInspection() {
   const form = document.getElementById("newInspectionForm");
 
   if (!form.checkValidity()) {
@@ -301,19 +307,27 @@ function scheduleInspection() {
     establishmentId: document.getElementById("establishment").value,
     type: document.getElementById("inspectionType").value,
     dateTime: document.getElementById("inspectionDate").value,
+    time_slot: document.getElementById("timeSlot").value,
     inspector: selectedInspector.name,
     inspectorId: selectedInspector.id,
     priority: document.getElementById("priorityLevel").value,
-    status: "Pending",
+    status: "status-pending",
     notes: document.getElementById("inspectionNotes").value,
   };
-
+  const res = await fetch("../../utility/adminAddInspection.php",{
+    method:"POST",
+    headers:{'Content-Type':'application/json'},
+    body:JSON.stringify(newInspection)
+  })
+  const j = await res.json()
+  console.log(j)
   upcomingInspections.unshift(newInspection);
   renderUpcomingInspections();
   renderInspectorSchedule();
   resetForm();
 
   showAlert("Inspection scheduled successfully!", "success"); 
+  initializeMap()
 }
 
 function resetForm() {
@@ -331,15 +345,22 @@ function resetForm() {
 function editInspection(id) {
   const inspection = upcomingInspections.find((i) => i.id === id);
   if (!inspection) return;
-
+  let inspectorSelect = document.getElementById("editInspector");
+  inspectorSelect.innerHTML = ""
+  inspectors.forEach(e=>{
+    const node = document.createElement("option")
+    if(e.fullname == inspection.inspector) node.selected = true
+    node.value = e.id
+    node.textContent = e.fullname
+    inspectorSelect.appendChild(node)
+  })
   // Populate edit form
   document.getElementById("editInspectionId").value = inspection.id;
   document.getElementById("editEstablishment").value =
-    inspection.establishmentId;
+    inspection.establishment;
   document.getElementById("editInspectionType").value =
     inspection.type.toLowerCase();
   document.getElementById("editInspectionDate").value = inspection.dateTime;
-  document.getElementById("editInspector").value = inspection.inspectorId;
   document.getElementById("editPriority").value =
     inspection.priority.toLowerCase();
   document.getElementById("editStatus").value = inspection.status.toLowerCase();
@@ -349,7 +370,7 @@ function editInspection(id) {
   new bootstrap.Modal(document.getElementById("editInspectionModal")).show();
 }
 
-function updateInspection() {
+async function updateInspection() {
   const form = document.getElementById("editInspectionForm");
 
   if (!form.checkValidity()) {
@@ -358,22 +379,32 @@ function updateInspection() {
   }
 
   const id = parseInt(document.getElementById("editInspectionId").value);
-  const inspectionIndex = upcomingInspections.findIndex((i) => i.id === id);
+  
+  const inspectionIndex = upcomingInspections.findIndex((i) => i.id == id);
 
   if (inspectionIndex === -1) return;
 
   const establishmentSelect = document.getElementById("editEstablishment");
+  let s = upcomingInspections.filter(e=> e.id == id )
+  console.log('thisis')
   const establishmentText =
-    establishmentSelect.options[establishmentSelect.selectedIndex].text;
+    s.establishment
 
   const inspectorSelect = document.getElementById("editInspector");
+  inspectorSelect.innerHTML = ""
+  inspectors.forEach(e=>{
+    const node = document.createElement("option")
+    node.value = e.id
+    node.textContent = e.fullname
+    inspectorSelect.appendChild(node)
+  })
   const inspectorText =
     inspectorSelect.options[inspectorSelect.selectedIndex].text;
 
   upcomingInspections[inspectionIndex] = {
     ...upcomingInspections[inspectionIndex],
     establishment: establishmentText,
-    establishmentId: document.getElementById("editEstablishment").value,
+    establishmentId: id,
     type: document.getElementById("editInspectionType").value,
     dateTime: document.getElementById("editInspectionDate").value,
     inspector: inspectorText,
@@ -382,7 +413,25 @@ function updateInspection() {
     status: document.getElementById("editStatus").value,
     notes: document.getElementById("editNotes").value,
   };
+  const json = {
+     establishment: establishmentText,
+    type: document.getElementById("editInspectionType").value,
+    dateTime: document.getElementById("editInspectionDate").value,
+    inspector: inspectorText,
+    inspectorId: document.getElementById("editInspector").value,
+    priority: document.getElementById("editPriority").value,
+    status: document.getElementById("editStatus").value,
+    notes: document.getElementById("editNotes").value,
+    inspectionId : id
+  }
 
+  const r = await fetch("../../utility/adminUpdateInspection.php",{
+    method:"POST",
+    headers:{'Content-Type':"application/json"},
+    body:JSON.stringify(json)
+  })
+  const c = await r.json()
+  console.log(c)
   renderUpcomingInspections();
   renderInspectorSchedule();
 

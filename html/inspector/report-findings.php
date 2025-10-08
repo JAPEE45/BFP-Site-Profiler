@@ -22,7 +22,7 @@
   </head>
   <body>
     <!-- Sidebar -->
-    <div class="sidebar" id="sidebar">
+     <div class="sidebar" id="sidebar">
       <div class="logo-section">
         <div class="logo">
           <i
@@ -35,25 +35,25 @@
 
       <nav class="sidebar-nav">
         <div class="nav-item">
-          <a href="./dashboard.html" class="nav-link ">
+          <a href="#" class="nav-link active">
             <i class="fas fa-tachometer-alt"></i>
             Dashboard
           </a>
         </div>
         <div class="nav-item">
-          <a href="./assigned-inspections.html" class="nav-link ">
+          <a href="./assigned-inspections.php" class="nav-link">
             <i class="fas fa-building"></i>
             Assigned Inspections
           </a>
         </div>
         <div class="nav-item">
-          <a href="./report-findings.html" class="nav-link active">
+          <a href="./report-findings.php" class="nav-link">
             <i class="fas fa-calendar-check"></i>
             Report Findings
           </a>
         </div>
         <div class="nav-item">
-          <a href="./gis-map.html" class="nav-link">
+          <a href="./gis-map.php" class="nav-link">
             <i class="fas fa-map-marker-alt"></i>
             GIS Map
           </a>
@@ -62,7 +62,7 @@
       </nav>
 
       <div class="nav-item">
-        <a href="../index.html" class="nav-link">
+        <a href="../index.php" class="nav-link">
           <i class="fas fa-sign-out-alt"></i>
           Logout
         </a>

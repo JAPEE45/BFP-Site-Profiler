@@ -1,36 +1,49 @@
 // Sample establishments data
 let establishments = [
-  {
-    id: 1,
-    name: "Delicious Restaurant",
-    type: "Food Service",
-    bfpRegNo: "BFP-VRC-2023-0456",
-    address: "123 Rizal St., Virac",
-    status: "Active",
-    lastInspection: "May 15, 2023",
-    coordinates: { lat: 13.5735, lng: 124.2307 },
-  },
-  {
-    id: 2,
-    name: "Juan's Hardware Store",
-    type: "Retail",
-    bfpRegNo: "BFP-VRC-2023-0789",
-    address: "456 Quezon Ave., Virac",
-    status: "Active",
-    lastInspection: "April 10, 2023",
-    coordinates: { lat: 13.575, lng: 124.232 },
-  },
-  {
-    id: 3,
-    name: "Cruz Family Residence",
-    type: "Residential",
-    bfpRegNo: "BFP-VRC-2023-0123",
-    address: "789 Luna St., Virac",
-    status: "Inactive",
-    lastInspection: "December 5, 2022",
-    coordinates: { lat: 13.572, lng: 124.229 },
-  },
+  // {
+  //   id: 1,
+  //   name: "Delicious Restaurant",
+  //   type: "Food Service",
+  //   bfpRegNo: "BFP-VRC-2023-0456",
+  //   address: "123 Rizal St., Virac",
+  //   status: "Active",
+  //   lastInspection: "May 15, 2023",
+  //   coordinates: { lat: 13.5735, lng: 124.2307 },
+  // },
+  // {
+  //   id: 2,
+  //   name: "Juan's Hardware Store",
+  //   type: "Retail",
+  //   bfpRegNo: "BFP-VRC-2023-0789",
+  //   address: "456 Quezon Ave., Virac",
+  //   status: "Active",
+  //   lastInspection: "April 10, 2023",
+  //   coordinates: { lat: 13.575, lng: 124.232 },
+  // },
+  // {
+  //   id: 3,
+  //   name: "Cruz Family Residence",
+  //   type: "Residential",
+  //   bfpRegNo: "BFP-VRC-2023-0123",
+  //   address: "789 Luna St., Virac",
+  //   status: "Inactive",
+  //   lastInspection: "December 5, 2022",
+  //   coordinates: { lat: 13.572, lng: 124.229 },
+  // },
 ];
+
+async function getEstablisment(){
+  const res = await fetch("../../utility/getMyEstablishment.php")
+  const json = await res.json()
+
+  json.forEach(e=>{
+    establishments.push({...e, coordinates:{lat: parseFloat(e.lat), lng: parseFloat(e.lng)}, status:"active"})
+  })
+  console.log(establishments)
+  updateEstablishmentsTable();
+}
+
+getEstablisment()
 
 let map;
 let selectedMarker;
@@ -150,12 +163,13 @@ function editEstablishment(id) {
     document.getElementById("editBusinessName").value = establishment.name;
     document.getElementById("editBfpRegNo").value = establishment.bfpRegNo;
     document.getElementById("editAddress").value = establishment.address;
+    document.getElementById("editBusinessType").value = establishment.type;
     document.getElementById("editLongitude").textContent =
       establishment.coordinates.lng.toFixed(6);
     document.getElementById("editLatitude").textContent =
       establishment.coordinates.lat.toFixed(6);
 
-    const editModalEl = new bootstrap.Modal(
+       const editModalEl = new bootstrap.Modal(
       document.getElementById("editEstablishmentModal")
     );
     editModalEl.show();
@@ -167,7 +181,7 @@ function editEstablishment(id) {
   }
 }
 
-function saveEstablishment() {
+async function saveEstablishment() {
   const form = document.getElementById("addEstablishmentForm");
   if (form.checkValidity()) {
     const businessName = document.getElementById("businessName").value;
@@ -175,12 +189,13 @@ function saveEstablishment() {
     const address = document.getElementById("address").value;
     const longitude = document.getElementById("longitude").textContent;
     const latitude = document.getElementById("latitude").textContent;
+    const business_type = document.getElementById("businessType").textContent;
 
     // Add to establishments array (in real app, this would be an API call)
     const newEstablishment = {
       id: establishments.length + 1,
       name: businessName,
-      type: "Food Service", // Default type
+      type: business_type, // Default type
       bfpRegNo: bfpRegNo,
       address: address,
       status: "Active",
@@ -193,7 +208,21 @@ function saveEstablishment() {
 
     establishments.push(newEstablishment);
     updateEstablishmentsTable();
-
+    const res =  await fetch('../../utility/addNewEstablishment.php',{
+      method:"POST",
+      headers:{'Content-Type': 'application/json'},
+      body:JSON.stringify({
+        business_name:businessName,
+        registration_no: bfpRegNo,
+        address: address,
+        x_coordinate: longitude,
+        y_coordinate: latitude,
+        type: business_type,
+        
+      })
+    })
+    const json = await res.json()
+    // console.log(json)
     // Close modal and reset form
     const addModalEl = bootstrap.Modal.getInstance(
       document.getElementById("addEstablishmentModal")
@@ -209,7 +238,7 @@ function saveEstablishment() {
   }
 }
 
-function updateEstablishment() {
+async function updateEstablishment() {
   const form = document.getElementById("editEstablishmentForm");
   const establishmentId = parseInt(form.getAttribute("data-establishment-id"));
 
@@ -219,7 +248,22 @@ function updateEstablishment() {
     const address = document.getElementById("editAddress").value;
     const longitude = document.getElementById("editLongitude").textContent;
     const latitude = document.getElementById("editLatitude").textContent;
-
+    const business_type = document.getElementById("editBusinessType").value;
+    const res =  await fetch('../../utility/updateMyEstablishment.php',{
+      method:"POST",
+      headers:{'Content-Type': 'application/json'},
+      body:JSON.stringify({
+        business_name:businessName,
+        registration_no: bfpRegNo,
+        address: address,
+        x_coordinate: longitude,
+        y_coordinate: latitude,
+        type: business_type,
+        id: establishmentId
+      })
+    })
+    const json = await res.json()
+    console.log(json)
     // Update establishment in array (in real app, this would be an API call)
     const establishmentIndex = establishments.findIndex(
       (e) => e.id === establishmentId
@@ -228,6 +272,7 @@ function updateEstablishment() {
       establishments[establishmentIndex].name = businessName;
       establishments[establishmentIndex].bfpRegNo = bfpRegNo;
       establishments[establishmentIndex].address = address;
+      establishments[establishmentIndex].type = business_type;
       if (longitude !== "Not selected") {
         establishments[establishmentIndex].coordinates.lng =
           parseFloat(longitude);
@@ -258,7 +303,7 @@ function updateEstablishmentsTable() {
     const row = document.createElement("tr");
     row.innerHTML = `
                     <td>${establishment.name}</td>
-                    <td>${establishment.type}</td>
+                    <td>${establishment.type || "N/A"}</td>
                     <td>${establishment.bfpRegNo}</td>
                     <td>${establishment.address}</td>
                     <td><span class="status-badge status-${establishment.status.toLowerCase()}">${

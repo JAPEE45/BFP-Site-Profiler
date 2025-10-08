@@ -159,7 +159,7 @@
                       >Inspection Date</label
                     >
                     <input
-                      type="datetime-local"
+                      type="date"
                       class="form-control"
                       id="inspectionDate"
                       required
@@ -313,16 +313,7 @@
                   <label for="editEstablishment" class="form-label"
                     >Establishment</label
                   >
-                  <select class="form-select" id="editEstablishment" required>
-                    <option value="">Select Establishment</option>
-                    <option value="est-001">
-                      Catanduanes State University
-                    </option>
-                    <option value="est-002">Virac Public Market</option>
-                    <option value="est-003">Virac Town Center</option>
-                    <option value="est-004">BFP Catanduanes</option>
-                    <option value="est-005">Catanduanes Hotel</option>
-                  </select>
+                  <input class="form-control" id="editEstablishment" required />
                 </div>
                 <div class="col-md-6 mb-3">
                   <label for="editInspectionType" class="form-label"
@@ -343,7 +334,7 @@
                     >Inspection Date</label
                   >
                   <input
-                    type="datetime-local"
+                    type="date"
                     class="form-control"
                     id="editInspectionDate"
                     required

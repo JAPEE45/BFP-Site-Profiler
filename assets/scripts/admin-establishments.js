@@ -1,56 +1,56 @@
 // Sample data
 let establishments = [
-  {
-    id: "EST-001",
-    name: "Catanduanes State University",
-    type: "Educational",
-    location: "Virac, Catanduanes",
-    owner: "Dr. Patrick Alain Azanza",
-    contact: "09271234567",
-    status: "Compliant",
-    lastInspection: "2023-05-15",
-    notes: "Regular educational facility inspection completed successfully.",
-  },
-  {
-    id: "EST-002",
-    name: "Virac Public Market",
-    type: "Public Market",
-    location: "Virac, Catanduanes",
-    owner: "Municipality of Virac",
-    contact: "09271234568",
-    status: "Non-Compliant",
-    lastInspection: "2023-04-28",
-    notes: "Fire exits blocked, needs immediate attention.",
-  },
-  {
-    id: "EST-003",
-    name: "Virac Town Center",
-    type: "Commercial",
-    location: "Virac, Catanduanes",
-    owner: "Juan Dela Cruz",
-    contact: "09271234569",
-    status: "Compliant",
-    lastInspection: "2023-06-01",
-    notes: "All fire safety measures in place.",
-  },
-  {
-    id: "EST-004",
-    name: "Catanduanes Hotel",
-    type: "Hospitality",
-    location: "Virac, Catanduanes",
-    owner: "Maria Santos",
-    contact: "09271234570",
-    status: "Pending Review",
-    lastInspection: "",
-    notes: "New establishment, pending initial inspection.",
-  },
+  // {
+  //   id: "EST-001",
+  //   name: "Catanduanes State University",
+  //   type: "Educational",
+  //   location: "Virac, Catanduanes",
+  //   owner: "Dr. Patrick Alain Azanza",
+  //   contact: "09271234567",
+  //   status: "Compliant",
+  //   lastInspection: "2023-05-15",
+  //   notes: "Regular educational facility inspection completed successfully.",
+  // },
+  // {
+  //   id: "EST-002",
+  //   name: "Virac Public Market",
+  //   type: "Public Market",
+  //   location: "Virac, Catanduanes",
+  //   owner: "Municipality of Virac",
+  //   contact: "09271234568",
+  //   status: "Non-Compliant",
+  //   lastInspection: "2023-04-28",
+  //   notes: "Fire exits blocked, needs immediate attention.",
+  // },
+  // {
+  //   id: "EST-003",
+  //   name: "Virac Town Center",
+  //   type: "Commercial",
+  //   location: "Virac, Catanduanes",
+  //   owner: "Juan Dela Cruz",
+  //   contact: "09271234569",
+  //   status: "Compliant",
+  //   lastInspection: "2023-06-01",
+  //   notes: "All fire safety measures in place.",
+  // },
+  // {
+  //   id: "EST-004",
+  //   name: "Catanduanes Hotel",
+  //   type: "Hospitality",
+  //   location: "Virac, Catanduanes",
+  //   owner: "Maria Santos",
+  //   contact: "09271234570",
+  //   status: "Pending Review",
+  //   lastInspection: "",
+  //   notes: "New establishment, pending initial inspection.",
+  // },
 ];
 
 let currentSort = { field: null, direction: "asc" };
 let filteredEstablishments = [...establishments];
 
 // Initialize page
-document.addEventListener("DOMContentLoaded", function () {
+document.addEventListener("DOMContentLoaded",  function () {
   renderTable();
   setupEventListeners();
 });
@@ -81,7 +81,13 @@ function setupEventListeners() {
   document.getElementById("exportBtn").addEventListener("click", exportData);
 }
 
-function renderTable() {
+async function renderTable() {
+  
+  const res = await fetch("../../utility/adminGetEstablishment.php");
+  const json = await res.json()
+  console.log(json)
+  establishments = json
+  filteredEstablishments = [...establishments]
   const tbody = document.getElementById("establishmentsTableBody");
   tbody.innerHTML = "";
 
@@ -97,12 +103,12 @@ function renderTable() {
 
 function createTableRow(establishment) {
   const row = document.createElement("tr");
-
+  establishment.status = establishment.status ? establishment.status : "pending-review"
   const statusClass =
     {
       Compliant: "status-compliant",
-      "Non-Compliant": "status-non-compliant",
-      "Pending Review": "status-pending",
+      "non-compliant": "status-non-compliant",
+      "pending-review": "status-pending",
     }[establishment.status] || "status-pending";
 
   row.innerHTML = `
@@ -123,11 +129,7 @@ function createTableRow(establishment) {
                         }')" title="View">
                             <i class="fas fa-eye"></i> View
                         </button>
-                        <button class="btn btn-warning btn-sm" onclick="editEstablishment('${
-                          establishment.id
-                        }')" title="Edit">
-                            <i class="fas fa-edit"></i> Edit
-                        </button>
+                       
                     </div>
                 </td>
             `;
@@ -227,9 +229,8 @@ function saveEstablishment() {
 }
 
 function viewEstablishment(id) {
-  const establishment = establishments.find((e) => e.id === id);
+  const establishment = establishments.find((e) => e.id == id);
   if (!establishment) return;
-
   const content = document.getElementById("viewEstablishmentContent");
   const statusClass =
     {

@@ -1,3 +1,7 @@
+<?php
+  include '../../utility/inspectorDasboard.php';
+?>
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -44,19 +48,19 @@
           </a>
         </div>
         <div class="nav-item">
-          <a href="./assigned-inspections.html" class="nav-link">
+          <a href="./assigned-inspections.php" class="nav-link">
             <i class="fas fa-building"></i>
             Assigned Inspections
           </a>
         </div>
         <div class="nav-item">
-          <a href="./report-findings.html" class="nav-link">
+          <a href="./report-findings.php" class="nav-link">
             <i class="fas fa-calendar-check"></i>
             Report Findings
           </a>
         </div>
         <div class="nav-item">
-          <a href="./gis-map.html" class="nav-link">
+          <a href="./gis-map.php" class="nav-link">
             <i class="fas fa-map-marker-alt"></i>
             GIS Map
           </a>
@@ -65,7 +69,7 @@
       </nav>
 
       <div class="nav-item">
-        <a href="../index.html" class="nav-link">
+        <a href="../index.php" class="nav-link">
           <i class="fas fa-sign-out-alt"></i>
           Logout
         </a>
@@ -92,7 +96,7 @@
           >
             <div class="d-flex align-items-center">
               <div class="ms-3">
-                <div class="stats-number text-primary">6</div>
+                <div class="stats-number text-primary"><?php echo $data['inspection'] ?? '0' ?></div>
                 <div class="stats-label">Scheduled Inspections</div>
               </div>
             </div>
@@ -107,7 +111,7 @@
           >
             <div class="d-flex align-items-center">
               <div class="ms-3">
-                <div class="stats-number text-secondary">2</div>
+                <div class="stats-number text-secondary"><?php echo $data['ongoing'] ?? '0' ?></div>
                 <div class="stats-label">Ongoing Now</div>
               </div>
             </div>
@@ -122,7 +126,7 @@
           >
             <div class="d-flex align-items-center">
               <div class="ms-3">
-                <div class="stats-number text-success">4</div>
+                <div class="stats-number text-success"><?php echo $data['completed'] ?? '0' ?></div>
                 <div class="stats-label">Completed</div>
               </div>
             </div>
@@ -137,7 +141,7 @@
           >
             <div class="d-flex align-items-center">
               <div class="ms-3">
-                <div class="stats-number" style="color: #b8860b">2</div>
+                <div class="stats-number" style="color: #b8860b"><?php echo $data['pending'] ?? '0' ?></div>
                 <div class="stats-label">Reports Pending</div>
               </div>
             </div>

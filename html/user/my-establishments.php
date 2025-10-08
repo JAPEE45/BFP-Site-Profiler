@@ -207,6 +207,17 @@
                   </div>
                 </div>
               </div>
+              <div class="col-md-6">
+                  <div class="mb-3">
+                    <label class="form-label">Business Type *</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="businessType"
+                      required
+                    />
+                  </div>
+                </div>
               <div class="mb-3">
                 <label class="form-label">Address *</label>
                 <textarea
@@ -255,7 +266,6 @@
         </div>
       </div>
     </div>
-
     <!-- View Establishment Modal -->
     <div class="modal fade" id="viewEstablishmentModal" tabindex="-1">
       <div class="modal-dialog modal-lg">
@@ -355,6 +365,17 @@
                   </div>
                 </div>
               </div>
+                <div class="col-md-6">
+                  <div class="mb-3">
+                    <label class="form-label">Business Type. *</label>
+                    <input
+                      type="text"
+                      class="form-control"
+                      id="editBusinessType"
+                      required
+                    />
+                  </div>
+                </div>
               <div class="mb-3">
                 <label class="form-label">Address *</label>
                 <textarea

@@ -81,7 +81,7 @@
           Logout
         </a>
       </div>
-    </div>
+    </div>  
 
     <!-- Main Content -->
     <div class="main-content">
@@ -112,33 +112,33 @@
           <div class="controls-left">
             <h5>All Establishments (<span id="totalCount">142</span>)</h5>
           </div>
-          <div class="controls-right">
+          <!-- <div class="controls-right">
             <button class="btn btn-bfp-secondary" id="filterBtn">
               <i class="fas fa-filter"></i> Filter
-            </button>
+            </button> -->
             <button class="btn btn-bfp-secondary" id="exportBtn">
               <i class="fas fa-download"></i> Export
             </button>
-            <button
+            <!-- <button
               class="btn btn-bfp-success"
               id="addNewBtn"
               data-bs-toggle="modal"
               data-bs-target="#addEstablishmentModal"
             >
               <i class="fas fa-plus"></i> Add New
-            </button>
+            </button> -->
           </div>
         </div>
 
         <!-- Search Controls -->
         <div class="search-controls">
-          <input
+          <!-- <input
             type="text"
             class="form-control"
             id="searchGeneral"
             placeholder="Search establishments..."
             style="max-width: 300px"
-          />
+          /> -->
           <input
             type="text"
             class="form-control"
@@ -178,7 +178,7 @@
                   <th class="sortable" data-sort="inspection">
                     Last Inspection <i class="fas fa-sort sort-icon"></i>
                   </th>
-                  <th>Actions</th>
+                  <th>Action</th>
                 </tr>
               </thead>
               <tbody id="establishmentsTableBody">
@@ -191,7 +191,7 @@
     </div>
 
     <!-- Add New Establishment Modal -->
-    <div class="modal fade" id="addEstablishmentModal" tabindex="-1">
+    <!-- <div class="modal fade" id="addEstablishmentModal" tabindex="-1">
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
@@ -306,7 +306,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <!-- View Establishment Modal -->
     <div class="modal fade" id="viewEstablishmentModal" tabindex="-1">
@@ -337,7 +337,7 @@
     </div>
 
     <!-- Edit Establishment Modal -->
-    <div class="modal fade" id="editEstablishmentModal" tabindex="-1">
+    <!-- <div class="modal fade" id="editEstablishmentModal" tabindex="-1">
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
           <div class="modal-header">
@@ -455,7 +455,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
 

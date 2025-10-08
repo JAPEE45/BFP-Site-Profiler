@@ -178,10 +178,10 @@
             compliance reports is approaching on June 30.
           </p>
           <div class="notice-actions">
-            <a href="./schedule-inspections.html" class="btn btn-sm btn-danger me-2">
+            <a href="./schedule-inspections.php" class="btn btn-sm btn-danger me-2">
                Review Registrations
             </a>
-            <a href="./schedule-inspections.html" class="btn btn-sm btn-dark">
+            <a href="./schedule-inspections.php" class="btn btn-sm btn-dark">
                Schedule Inspections
             </a>
           </div>
