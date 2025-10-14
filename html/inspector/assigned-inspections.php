@@ -1,3 +1,12 @@
+<?php 
+  session_start();
+  $userId = $_SESSION['user'];
+  if(empty($userId)){
+    header("Location: /BFP-Site-Profiler/html/index.php");
+    exit();
+  }
+
+?>
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -22,6 +31,7 @@
   </head>
   <body>
     <!-- Sidebar -->
+<p id="userId"><?php echo $userId ?></p>
  <div class="sidebar" id="sidebar">
       <div class="logo-section">
         <div class="logo">

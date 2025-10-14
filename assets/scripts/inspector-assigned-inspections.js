@@ -1,27 +1,5 @@
 // Sample inspection data
-const inspectionData = [
-  {
-    id: 1,
-    establishment: "Virac Public Market",
-    type: "Commercial",
-    address: "San Juan St., Virac",
-    inspectionDate: "2025-07-15",
-    riskLevel: "high",
-    status: "overdue",
-    lat: 13.6248,
-    lng: 124.2363,
-  },
-  {
-    id: 2,
-    establishment: "Catanduanes State University",
-    type: "Educational",
-    address: "Calatagan, Virac",
-    inspectionDate: "2025-07-18",
-    riskLevel: "medium",
-    status: "pending",
-    lat: 13.6185,
-    lng: 124.2456,
-  },
+let inspectionData = [
   {
     id: 3,
     establishment: "Virac Town Center",
@@ -67,7 +45,13 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 // Render table data
-function renderTable() {
+const userId = document.getElementById("userId").textContent
+async function renderTable() {
+  
+  const res = await fetch(`../../utility/inspectorInspectionList.php?user_id=${userId}`)
+  const j = await res.json();
+  inspectionData = j
+  filteredData = [...j]
   const tbody = document.getElementById("inspectionTableBody");
   tbody.innerHTML = "";
 
@@ -188,7 +172,7 @@ function exportData() {
 
 // Open map modal
 function openMapModal(id) {
-  const item = inspectionData.find((i) => i.id === id);
+  const item = inspectionData.find((i) => i.id == id);
   if (!item) return;
 
   document.getElementById("mapModalTitle").textContent = item.establishment;
@@ -244,7 +228,7 @@ function openMapModal(id) {
 
 // Open report modal
 function openReportModal(id) {
-  const item = inspectionData.find((i) => i.id === id);
+  const item = inspectionData.find((i) => i.id == id);
   if (!item) return;
 
   document.getElementById(
